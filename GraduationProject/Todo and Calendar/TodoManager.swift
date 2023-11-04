@@ -139,7 +139,7 @@ struct DietData: Decodable {
     
     var message: String
 }
-struct SleepData: Decodable {
+struct RoutineData: Decodable {
     var userId: String?
     var todo_id: [String]
     
@@ -149,9 +149,9 @@ struct SleepData: Decodable {
     var todoLabel: [String?]
     var startDateTime: [String]
     
-    var sleepsType: [String]
-    var sleepsValue: [String]
-    var sleepsTime: [String]
+    var routinesType: [String]
+    var routinesValue: [String]
+    var routinesTime: [String]
     
 //    var frequency: [String]
     var reminderTime: [String]
@@ -250,7 +250,7 @@ struct addDietData: Decodable {
     var message: String
 }
 
-struct addSleepData: Decodable {
+struct addRoutineData: Decodable {
     var userId: String?
     var category_id: Int
     var todoLabel: String?
@@ -258,9 +258,9 @@ struct addSleepData: Decodable {
     var todoIntroduction: String
     var startDateTime: String
     
-    var sleepType: String
-    var sleepValue: Int
-    var sleepTime: String
+    var routineType: String
+    var routineValue: Int
+    var routineTime: String
     
     var reminderTime: String
     var todoStatus: Int
@@ -407,12 +407,12 @@ class DietStore: ObservableObject {
     }
 }
 
-class SleepStore: ObservableObject {
-    @Published var sleeps: [Sleep] = []
+class RoutineStore: ObservableObject {
+    @Published var routines: [Routine] = []
     
-    func sleepForDate(_ date: Date) -> [Sleep] {
-        let filteredDiets = sleeps.filter { diet in
-            return isDate(date, inRangeOf: diet.startDateTime, and: diet.dueDateTime)
+    func routineForDate(_ date: Date) -> [Routine] {
+        let filteredDiets = routines.filter { routine in
+            return isDate(date, inRangeOf: routine.startDateTime, and: routine.dueDateTime)
         }
         return filteredDiets
     }
@@ -429,13 +429,13 @@ class SleepStore: ObservableObject {
         return formatter.string(from: date)
     }
     func clearTodos() {
-        sleeps = []
+        routines = []
     }
-    func updateCompleteValue(withID id: Int, newValue: Int) {
-        if let index = sleeps.firstIndex(where: { $0.id == id }) {
-            sleeps[index].completeValue = Float(newValue)
-        }
-    }
+//    func updateCompleteValue(withID id: Int, newValue: Int) {
+//        if let index = routines.firstIndex(where: { $0.id == id }) {
+//            routines[index].completeValue = Float(newValue)
+//        }
+//    }
 }
 
 class TickerStore: ObservableObject {

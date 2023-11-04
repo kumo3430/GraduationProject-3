@@ -13,6 +13,7 @@
 		13B917052AEBAFE300FF6076 /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B917042AEBAFE300FF6076 /* AddTask.swift */; };
 		13B917072AEBAFF600FF6076 /* ReviseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B917062AEBAFF600FF6076 /* ReviseTask.swift */; };
 		13B917092AEBB01900FF6076 /* Check.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B917082AEBB01900FF6076 /* Check.swift */; };
+		13CC3E042AF6467400207DA7 /* AddRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CC3E032AF6467400207DA7 /* AddRoutineView.swift */; };
 		13D6E1E62A710D480049E5A5 /* verifyRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D6E1E52A710D480049E5A5 /* verifyRegister.swift */; };
 		13D6E1E92A710DA50049E5A5 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 13D6E1E82A710DA50049E5A5 /* SwiftSMTP */; };
 		3B01AF142AC0709500321E35 /* CheckSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B01AF132AC0709500321E35 /* CheckSpaceView.swift */; };
@@ -34,7 +35,6 @@
 		3B37A8E32A188BA6009BB504 /* GraduationProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8E22A188BA6009BB504 /* GraduationProjectTests.swift */; };
 		3B37A8ED2A188BA6009BB504 /* GraduationProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8EC2A188BA6009BB504 /* GraduationProjectUITests.swift */; };
 		3B37A8EF2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8EE2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift */; };
-		3B421BE32AAFF730000255BA /* AddSleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BE22AAFF730000255BA /* AddSleepView.swift */; };
 		3B4A8FD42AA6D8A100C4E0AF /* AchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */; };
 		3B4A8FD62AA6DC3D00C4E0AF /* AchievementCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */; };
 		3B4A8FD82AA6E78B00C4E0AF /* SportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */; };
@@ -131,6 +131,7 @@
 		13B917042AEBAFE300FF6076 /* AddTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTask.swift; sourceTree = "<group>"; };
 		13B917062AEBAFF600FF6076 /* ReviseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseTask.swift; sourceTree = "<group>"; };
 		13B917082AEBB01900FF6076 /* Check.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Check.swift; sourceTree = "<group>"; };
+		13CC3E032AF6467400207DA7 /* AddRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRoutineView.swift; sourceTree = "<group>"; };
 		13D6E1E52A710D480049E5A5 /* verifyRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyRegister.swift; sourceTree = "<group>"; };
 		3B01AF132AC0709500321E35 /* CheckSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSpaceView.swift; sourceTree = "<group>"; };
 		3B05FB162A949EFB00540463 /* AddDietView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDietView.swift; sourceTree = "<group>"; };
@@ -154,7 +155,6 @@
 		3B37A8E82A188BA6009BB504 /* GraduationProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraduationProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B37A8EC2A188BA6009BB504 /* GraduationProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectUITests.swift; sourceTree = "<group>"; };
 		3B37A8EE2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3B421BE22AAFF730000255BA /* AddSleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSleepView.swift; sourceTree = "<group>"; };
 		3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementView.swift; sourceTree = "<group>"; };
 		3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCardView.swift; sourceTree = "<group>"; };
 		3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportDetailView.swift; sourceTree = "<group>"; };
@@ -418,8 +418,8 @@
 				3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */,
 				3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */,
 				3B0A5DB12A81D6B600283B40 /* AddSportView.swift */,
+				13CC3E032AF6467400207DA7 /* AddRoutineView.swift */,
 				3B05FB162A949EFB00540463 /* AddDietView.swift */,
-				3B421BE22AAFF730000255BA /* AddSleepView.swift */,
 			);
 			path = AddTodoView;
 			sourceTree = "<group>";
@@ -664,7 +664,6 @@
 				3B8423FF2ABC5072003112E6 /* TodayTasksView.swift in Sources */,
 				3BFDFD6A2A1C6E3D0071798F /* AppDelegate.swift in Sources */,
 				3BCECBA52AE693F90093F1BB /* UserProfileEditView.swift in Sources */,
-				3B421BE32AAFF730000255BA /* AddSleepView.swift in Sources */,
 				3B4A8FD42AA6D8A100C4E0AF /* AchievementView.swift in Sources */,
 				3BB6D17B2ACA69DF005D3EE7 /* HabitTrackingIndicatorCardView.swift in Sources */,
 				3BA700552A1CCB940096B2FF /* FireAuth.swift in Sources */,
@@ -729,6 +728,7 @@
 				3BFDFD642A1C655C0071798F /* LoginView.swift in Sources */,
 				3BAE3CB92ABAEC1B0079464F /* HabitTrackingIndicatorView.swift in Sources */,
 				13D6E1E62A710D480049E5A5 /* verifyRegister.swift in Sources */,
+				13CC3E042AF6467400207DA7 /* AddRoutineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

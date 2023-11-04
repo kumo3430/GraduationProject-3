@@ -123,16 +123,16 @@ struct Diet: Identifiable {
 //    case sleepFullHours = "睡滿N小時"
 //}
 
-struct Sleep: Identifiable {
+struct Routine: Identifiable {
     var id: Int
     var label: String
     var title: String
     var description: String
     var startDateTime: Date
     
-    var selectedSleeps: String
-    var sleepValue: Int
-    var sleepTime: Date
+    var selectedRoutines: String
+    var routineValue: Int
+    var routineTime: Date
     // 週期選擇
 //    var recurringUnit: String
     // 是否有結束日期
@@ -144,7 +144,9 @@ struct Sleep: Identifiable {
     
     var RecurringStartDate: Date
     var RecurringEndDate: Date
-    var completeValue: Float
+    var sleepTime: Date?
+    var wakeUpTime: Date?
+//    var completeValue: Float
 }
 
 struct Ticker: Identifiable {

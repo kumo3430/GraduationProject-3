@@ -219,15 +219,15 @@ func handleDietList(data: Data,store: DietStore, completion: @escaping ([String:
     completion(["message":"Success"])
 }
 
-func handleSleepList(data: Data,store: SleepStore, completion: @escaping ([String:String]) -> Void) {
-    handleDecodableData(SleepData.self, data: data) { userData in
+func handleRoutineList(data: Data,store: RoutineStore, completion: @escaping ([String:String]) -> Void) {
+    handleDecodableData(RoutineData.self, data: data) { userData in
         for index in userData.todoTitle.indices {
             
             if let startDate = convertToDate(userData.startDateTime[index]),
                let dueDateTime = convertToDate(userData.dueDateTime[index]),
                let recurringStartDate = convertToDate(userData.RecurringStartDate[index]),
                let recurringEndDate = convertToDate(userData.RecurringEndDate[index]),
-               let sleepsTime = convertToTime(userData.sleepsTime[index]),
+               let routinesTime = convertToTime(userData.routinesTime[index]),
                let reminderTime = convertToTime(userData.reminderTime[index]) {
                 
                 //                let frequency = userData.frequency[index]
@@ -237,24 +237,25 @@ func handleSleepList(data: Data,store: SleepStore, completion: @escaping ([Strin
                 let isTodoStatus = ConvertTodoStatus(todoStatus: todoStatus ?? "0")
                 
                 let taskId = Int(userData.todo_id[index])
-                let sleep = Sleep(id: taskId!,
+                let routine = Routine(id: taskId!,
                                   label: userData.todoLabel[index]!,
                                   title: userData.todoTitle[index],
                                   description: userData.todoIntroduction[index],
                                   startDateTime: startDate,
-                                  selectedSleeps: userData.sleepsType[index],
-                                  sleepValue: Int(userData.sleepsValue[index])!,
-                                  sleepTime: sleepsTime,
+                                  selectedRoutines: userData.routinesType[index],
+                                  routineValue: Int(userData.routinesValue[index])!,
+                                  routineTime: routinesTime,
                                   recurringOption: recurringOption,
                                   todoStatus: isTodoStatus,
                                   dueDateTime: dueDateTime,
                                   reminderTime: reminderTime,
                                   todoNote: userData.todoNote[index],
                                   RecurringStartDate: recurringStartDate,
-                                  RecurringEndDate: recurringEndDate,
-                                  completeValue: Float(userData.completeValue[index]) ?? 0.0)
+                                  RecurringEndDate: recurringEndDate,  
+                                      sleepTime: nil,
+                                      wakeUpTime: nil)
                 DispatchQueue.main.async {
-                    store.sleeps.append(sleep)
+                    store.routines.append(routine)
                 }
             } else {
                 print("DietList - 日期或時間轉換失敗")

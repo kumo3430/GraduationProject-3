@@ -73,7 +73,8 @@ func formattedDate(_ date: Date) -> String {
 
 func formattedTime(_ date: Date) -> String {
     let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm:ss"
+//    formatter.dateFormat = "HH:mm:ss"
+    formatter.dateFormat = "HH:mm"
     return formatter.string(from: date)
 }
 
@@ -118,8 +119,8 @@ func handleDataForPHP(php: String, data: Data,store: (any ObservableObject)? = n
         handleSportList(data: data,store: store as! SportStore, completion: completion)
     case "DietList":
         handleDietList(data: data,store: store as! DietStore, completion: completion)
-    case "SleepList":
-        handleSleepList(data: data,store: store as! SleepStore, completion: completion)
+    case "RoutineList":
+        handleRoutineList(data: data,store: store as! RoutineStore, completion: completion)
     case "tickersList":
         handletickersList(data: data,store: store as! TickerStore, completion: completion)
         
@@ -131,8 +132,8 @@ func handleDataForPHP(php: String, data: Data,store: (any ObservableObject)? = n
         handleSportAdd(data: data,store: store as! SportStore, completion: completion)
     case "addDiet":
         handleDietAdd(data: data,store: store as! DietStore, completion: completion)
-    case "addSleep":
-        handleSleepAdd(data: data,store: store as! SleepStore, completion: completion)
+    case "addRoutine":
+        handleRoutineAdd(data: data,store: store as! RoutineStore, completion: completion)
         
     case "reviseSpace":
         handleStudySpaceRevise(data: data, completion: completion)

@@ -31,6 +31,7 @@ struct TodayTasksView: View {
     @EnvironmentObject var todoStore: TodoStore
     @EnvironmentObject var sportStore: SportStore
     @EnvironmentObject var dietStore: DietStore
+    @EnvironmentObject var routineStore: RoutineStore
     //    @ObservedObject var sportStore: SportStore
     @State private var filteredSports: [Sport] = []
     @State var tasksForToday: [Task] = []
@@ -285,26 +286,7 @@ struct TodayTasksView: View {
             }
         }
     }
-    //    func getTaskView(for type: TaskType) -> some View {
-    //        let taskView: AnyView
-    //
-    //        switch type {
-    //        case .sport:
-    //            taskView =  AnyView(CheckSportView(RecurringStartDate: Date(), RecurringEndDate: Date(), completeValue: 0.0, task: sampleSport))
-    //        case .study:
-    //            taskView =  AnyView(CheckSportView(RecurringStartDate: Date(), RecurringEndDate: Date(), completeValue: 0.0, task: sampleSport))
-    //        case .space:
-    //            taskView =  AnyView(CheckSportView(RecurringStartDate: Date(), RecurringEndDate: Date(), completeValue: 0.0, task: sampleSport))
-    //        case .diet:
-    //            taskView =  AnyView(CheckSportView(RecurringStartDate: Date(), RecurringEndDate: Date(), completeValue: 0.0, task: sampleSport))
-    //        case .sleep:
-    //            taskView =  AnyView(CheckSportView(RecurringStartDate: Date(), RecurringEndDate: Date(), completeValue: 0.0, task: sampleSport))
-    //        }
-    //        return taskView
-    //            .background(Color.white)
-    //            .cornerRadius(10)
-    //            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-    //    }
+
     func getTaskView(task: Any, type: String) -> some View {
         let taskView: AnyView
         switch type {
@@ -324,21 +306,6 @@ struct TodayTasksView: View {
             .background(Color.white)
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-    }
-    
-    struct TickerRow: View {
-        @EnvironmentObject var tickerStore: SportStore
-        var ticker: Sport
-        var body: some View {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("名稱: \(ticker.title)")
-                }
-            }
-            .onAppear() {
-                print("taskde:\(ticker)")
-            }
-        }
     }
 }
 

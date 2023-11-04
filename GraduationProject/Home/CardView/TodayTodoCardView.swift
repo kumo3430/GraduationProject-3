@@ -19,7 +19,7 @@ struct TodayTodoCardView: View {
     @EnvironmentObject var todoStore: TodoStore
     @EnvironmentObject var sportStore: SportStore
     @EnvironmentObject var dietStore: DietStore
-    @EnvironmentObject var sleepStore: SleepStore
+    @EnvironmentObject var routineStore: RoutineStore
     
     // Helper function to format date
     func formattedDate(_ date: Date) -> String {
@@ -144,7 +144,7 @@ struct TodayTodoCardView: View {
                 Spacer()
             }
             
-            ForEach(sleepStore.sleepForDate(Date()), id: \.id) { todo in
+            ForEach(routineStore.routineForDate(Date()), id: \.id) { todo in
                 HStack(alignment: .top) {
                     Text(todo.title)
                         .font(.subheadline)

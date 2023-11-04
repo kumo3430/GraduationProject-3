@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddSleepView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var sleepStore: SleepStore
+    @EnvironmentObject var routineStore: RoutineStore
     
     @State var uid: String = ""
     @State var category_id: Int = 1

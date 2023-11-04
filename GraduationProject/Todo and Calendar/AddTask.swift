@@ -232,13 +232,13 @@ func handleDietAdd(data: Data,store: DietStore, completion: @escaping ([String:S
         }
     }
 }
-func handleSleepAdd(data: Data,store: SleepStore, completion: @escaping ([String:String]) -> Void) {
-    handleDecodableData(addSleepData.self, data: data) { userData in
-        if (userData.message == "User New Sleep successfullyUser New first RecurringInstance successfully") {
+func handleRoutineAdd(data: Data,store: RoutineStore, completion: @escaping ([String:String]) -> Void) {
+    handleDecodableData(addRoutineData.self, data: data) { userData in
+        if (userData.message == "User New routine successfullyUser New first RecurringInstance successfully") {
             
             if let startDate = convertToDate(userData.startDateTime ),
                let dueDateTime = convertToDate(userData.dueDateTime ),
-               let sleepTime = convertToTime(userData.sleepTime ),
+               let routinesTime = convertToTime(userData.routineTime ),
                let reminderTime = convertToTime(userData.reminderTime ) {
                 
 //                let frequency = userData.frequency
@@ -249,14 +249,14 @@ func handleSleepAdd(data: Data,store: SleepStore, completion: @escaping ([String
                 let RecurringEndDate = addRecurringEndDate(frequency: 0, startDate: startDate)
                 
                 let taskId = Int(userData.todo_id )
-                let diet = Sleep(id: taskId,
+                let routine = Routine(id: taskId,
                                 label: userData.todoLabel ?? "",
                                 title: userData.todoTitle ,
                                 description: userData.todoIntroduction ,
                                 startDateTime: startDate,
-                                selectedSleeps: userData.sleepType ,
-                                sleepValue: userData.sleepValue,
-                                sleepTime: sleepTime,
+                                selectedRoutines: userData.routineType ,
+                                routineValue: userData.routineValue,
+                                routineTime: routinesTime,
                                  recurringOption: recurringOption,
                                 todoStatus: isTodoStatus,
                                 dueDateTime: dueDateTime,
@@ -264,9 +264,10 @@ func handleSleepAdd(data: Data,store: SleepStore, completion: @escaping ([String
                                 todoNote: userData.todoNote ?? "" ,
                                 RecurringStartDate: startDate,
                                 RecurringEndDate: RecurringEndDate,
-                                completeValue:  0)
+                                   sleepTime: nil,
+                                   wakeUpTime: nil)
                 DispatchQueue.main.async {
-                    store.sleeps.append(diet)
+                    store.routines.append(routine)
                 }
 //                completion(["Success"])
                 completion(["message":"Success"])

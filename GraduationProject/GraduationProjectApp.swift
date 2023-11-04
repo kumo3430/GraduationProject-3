@@ -25,7 +25,7 @@ struct YourApp: App {
     @StateObject var todoStore = TodoStore()
     @StateObject var sportStore = SportStore()
     @StateObject var dietStore = DietStore()
-    @StateObject var sleepStore = SleepStore()
+    @StateObject var routineStore = RoutineStore()
     @StateObject var tickerStore = TickerStore()
     @StateObject private var tabBarSettings = TabBarSettings()
     
@@ -46,7 +46,7 @@ struct YourApp: App {
                         .environmentObject(todoStore)
                         .environmentObject(sportStore)
                         .environmentObject(dietStore)
-                        .environmentObject(sleepStore)
+                        .environmentObject(routineStore)
                         .environmentObject(tickerStore)
                         .environmentObject(tabBarSettings)
                         .onAppear() {
@@ -107,7 +107,7 @@ struct YourApp: App {
         todoStore.clearTodos()
         sportStore.clearTodos()
         dietStore.clearTodos()
-        sleepStore.clearTodos()
+        routineStore.clearTodos()
         tickerStore.clearTodos()
         UserDefaults.standard.set("", forKey: "uid")
         UserDefaults.standard.set("", forKey: "userName")
@@ -139,8 +139,8 @@ struct YourApp: App {
         tickersList { tickersListMessage in
             printResultMessage(for: tickersListMessage, withOperationName: "TickersList")
         }
-        SleepList { dietListMessage in
-            printResultMessage(for: dietListMessage, withOperationName: "SleepList")
+        RoutineList { dietListMessage in
+            printResultMessage(for: dietListMessage, withOperationName: "RoutineList")
         }
         DietList { dietListMessage in
             printResultMessage(for: dietListMessage, withOperationName: "DietList")
@@ -192,9 +192,9 @@ struct YourApp: App {
         }
     }
     
-    private func SleepList(completion: @escaping (String) -> Void) {
+    private func RoutineList(completion: @escaping (String) -> Void) {
         let body: [String: Any] = ["uid": uid]
-        phpUrl(php: "SleepList",type: "list",body:body,store: sleepStore){ message in
+        phpUrl(php: "RoutineList",type: "list",body:body,store: routineStore){ message in
             // 在此处调用回调闭包，将 messenge 值传递给调用者
            // completion(message[0])
             completion(message["message"]!)
