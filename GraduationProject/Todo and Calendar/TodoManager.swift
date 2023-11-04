@@ -139,6 +139,32 @@ struct DietData: Decodable {
     
     var message: String
 }
+struct SleepData: Decodable {
+    var userId: String?
+    var todo_id: [String]
+    
+    var category_id: Int
+    var todoTitle: [String]
+    var todoIntroduction: [String]
+    var todoLabel: [String?]
+    var startDateTime: [String]
+    
+    var sleepsType: [String]
+    var sleepsValue: [String]
+    var sleepsTime: [String]
+    
+//    var frequency: [String]
+    var reminderTime: [String]
+    var todoStatus: [String?]
+    var dueDateTime: [String]
+    var todoNote: [String]
+    
+    var RecurringStartDate: [String]
+    var RecurringEndDate: [String]
+    var completeValue: [String]
+    
+    var message: String
+}
 
 struct TickerData: Decodable {
     var userId: String?
@@ -384,7 +410,7 @@ class DietStore: ObservableObject {
 class SleepStore: ObservableObject {
     @Published var sleeps: [Sleep] = []
     
-    func dietForDate(_ date: Date) -> [Sleep] {
+    func sleepForDate(_ date: Date) -> [Sleep] {
         let filteredDiets = sleeps.filter { diet in
             return isDate(date, inRangeOf: diet.startDateTime, and: diet.dueDateTime)
         }

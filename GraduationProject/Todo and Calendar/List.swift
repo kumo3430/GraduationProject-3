@@ -34,19 +34,19 @@ func ConvertTodoStatus(todoStatus: String) -> Bool {
 func handleStudySpaceList(data: Data,store: TaskStore, completion: @escaping ([String:String]) -> Void) {
     handleDecodableData(TaskData.self, data: data) { userData in
         for index in userData.todoTitle.indices {
-
+            
             if let startDate = convertToDate(userData.startDateTime[index]),
                let repetition1Count = convertToDate(userData.repetition1Count[index]),
                let repetition2Count = convertToDate(userData.repetition2Count[index]),
                let repetition3Count = convertToDate(userData.repetition3Count[index]),
                let repetition4Count = convertToDate(userData.repetition4Count[index]),
                let reminderTime = convertToTime(userData.reminderTime[index]) {
-
+                
                 let ReviewChecked0 = userData.repetition1Status[index] == "1"
                 let ReviewChecked1 = userData.repetition2Status[index] == "1"
                 let ReviewChecked2 = userData.repetition3Status[index] == "1"
                 let ReviewChecked3 = userData.repetition4Status[index] == "1"
-
+                
                 let taskId = Int(userData.todo_id[index])
                 let task = Task(id: taskId!,label: userData.todoLabel[index]!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
                 DispatchQueue.main.async {
@@ -57,9 +57,9 @@ func handleStudySpaceList(data: Data,store: TaskStore, completion: @escaping ([S
             }
         }
     }
-//    print("tasks:\(taskStore.tasks)")
+    //    print("tasks:\(taskStore.tasks)")
     //    completion(["Success"])
-        completion(["message":"Success"])
+    completion(["message":"Success"])
 }
 
 //func handleStudyGeneralList(data: Data, store: TodoStore, completion: @escaping ([String]) -> Void) {
@@ -79,7 +79,7 @@ func handleStudyGeneralList(data: Data, store: TodoStore, completion: @escaping 
                 } else  if (userData.studyUnit[index] == "1" ) {
                     studyUnit = "次"
                 }
-
+                
                 let frequency = userData.frequency[index]
                 let recurringUnit = ConvertFrequency(frequency: frequency)
                 let recurringOption = calculateRecurringOption(dueDateTime: dueDateTime, startDate: startDate)
@@ -111,23 +111,23 @@ func handleStudyGeneralList(data: Data, store: TodoStore, completion: @escaping 
             }
         }
     }
-//    print("tasks:\(todoStore.todos)")
+    //    print("tasks:\(todoStore.todos)")
     //    completion(["Success"])
-        completion(["message":"Success"])
+    completion(["message":"Success"])
 }
 
 //func handleSportList(data: Data,store: SportStore, completion: @escaping ([String]) -> Void) {
 func handleSportList(data: Data,store: SportStore, completion: @escaping ([String:String]) -> Void) {
     handleDecodableData(SportData.self, data: data) { userData in
         for index in userData.todoTitle.indices {
-
+            
             var sportUnit: String = ""
             if let startDate = convertToDate(userData.startDateTime[index]),
                let dueDateTime = convertToDate(userData.dueDateTime[index]),
                let recurringStartDate = convertToDate(userData.RecurringStartDate[index]),
                let recurringEndDate = convertToDate(userData.RecurringEndDate[index]),
                let reminderTime = convertToTime(userData.reminderTime[index]) {
-
+                
                 if (userData.sportUnit[index] == "0" ){
                     sportUnit = "小時"
                 } else  if (userData.sportUnit[index] == "1" ) {
@@ -135,28 +135,28 @@ func handleSportList(data: Data,store: SportStore, completion: @escaping ([Strin
                 } else  if (userData.sportUnit[index] == "2" ) {
                     sportUnit = "卡路里"
                 }
-
+                
                 let frequency = userData.frequency[index]
                 let recurringUnit = ConvertFrequency(frequency: frequency)
                 let recurringOption = calculateRecurringOption(dueDateTime: dueDateTime, startDate: startDate)
                 let todoStatus = userData.todoStatus[index]
                 let isTodoStatus = ConvertTodoStatus(todoStatus: todoStatus ?? "0")
-
+                
                 let taskId = Int(userData.todo_id[index])
                 let sport = Sport(id: taskId!,
-                                label: userData.todoLabel[index]!,
-                                title: userData.todoTitle[index],
-                                description: userData.todoIntroduction[index],
-                                startDateTime: startDate,
-                                selectedSport: userData.sportType[index],
+                                  label: userData.todoLabel[index]!,
+                                  title: userData.todoTitle[index],
+                                  description: userData.todoIntroduction[index],
+                                  startDateTime: startDate,
+                                  selectedSport: userData.sportType[index],
                                   sportValue:  Float(userData.sportValue[index])!,
-                                sportUnits: sportUnit,
-                                recurringUnit: recurringUnit,
-                                recurringOption: recurringOption,
-                                todoStatus: isTodoStatus,
-                                dueDateTime: dueDateTime,
-                                reminderTime: reminderTime,
-                                todoNote: userData.todoNote[index],
+                                  sportUnits: sportUnit,
+                                  recurringUnit: recurringUnit,
+                                  recurringOption: recurringOption,
+                                  todoStatus: isTodoStatus,
+                                  dueDateTime: dueDateTime,
+                                  reminderTime: reminderTime,
+                                  todoNote: userData.todoNote[index],
                                   RecurringStartDate: recurringStartDate,
                                   RecurringEndDate: recurringEndDate,
                                   completeValue: Float(userData.completeValue[index]) ?? 0.0)
@@ -168,22 +168,22 @@ func handleSportList(data: Data,store: SportStore, completion: @escaping ([Strin
             }
         }
     }
-//    print("tasks:\(sportStore.sports)")
+    //    print("tasks:\(sportStore.sports)")
     //    completion(["Success"])
-        completion(["message":"Success"])
+    completion(["message":"Success"])
 }
 
 //func handleDietList(data: Data,store: DietStore, completion: @escaping ([String]) -> Void) {
 func handleDietList(data: Data,store: DietStore, completion: @escaping ([String:String]) -> Void) {
     handleDecodableData(DietData.self, data: data) { userData in
         for index in userData.todoTitle.indices {
-
+            
             if let startDate = convertToDate(userData.startDateTime[index]),
                let dueDateTime = convertToDate(userData.dueDateTime[index]),
                let recurringStartDate = convertToDate(userData.RecurringStartDate[index]),
                let recurringEndDate = convertToDate(userData.RecurringEndDate[index]),
                let reminderTime = convertToTime(userData.reminderTime[index]) {
-
+                
                 let frequency = userData.frequency[index]
                 let recurringUnit = ConvertFrequency(frequency: frequency)
                 let recurringOption = calculateRecurringOption(dueDateTime: dueDateTime, startDate: startDate)
@@ -216,7 +216,53 @@ func handleDietList(data: Data,store: DietStore, completion: @escaping ([String:
         }
     }
     //    completion(["Success"])
-        completion(["message":"Success"])
+    completion(["message":"Success"])
+}
+
+func handleSleepList(data: Data,store: SleepStore, completion: @escaping ([String:String]) -> Void) {
+    handleDecodableData(SleepData.self, data: data) { userData in
+        for index in userData.todoTitle.indices {
+            
+            if let startDate = convertToDate(userData.startDateTime[index]),
+               let dueDateTime = convertToDate(userData.dueDateTime[index]),
+               let recurringStartDate = convertToDate(userData.RecurringStartDate[index]),
+               let recurringEndDate = convertToDate(userData.RecurringEndDate[index]),
+               let sleepsTime = convertToTime(userData.sleepsTime[index]),
+               let reminderTime = convertToTime(userData.reminderTime[index]) {
+                
+                //                let frequency = userData.frequency[index]
+                //                let recurringUnit = ConvertFrequency(frequency: frequency)
+                let recurringOption = calculateRecurringOption(dueDateTime: dueDateTime, startDate: startDate)
+                let todoStatus = userData.todoStatus[index]
+                let isTodoStatus = ConvertTodoStatus(todoStatus: todoStatus ?? "0")
+                
+                let taskId = Int(userData.todo_id[index])
+                let sleep = Sleep(id: taskId!,
+                                  label: userData.todoLabel[index]!,
+                                  title: userData.todoTitle[index],
+                                  description: userData.todoIntroduction[index],
+                                  startDateTime: startDate,
+                                  selectedSleeps: userData.sleepsType[index],
+                                  sleepValue: Int(userData.sleepsValue[index])!,
+                                  sleepTime: sleepsTime,
+                                  recurringOption: recurringOption,
+                                  todoStatus: isTodoStatus,
+                                  dueDateTime: dueDateTime,
+                                  reminderTime: reminderTime,
+                                  todoNote: userData.todoNote[index],
+                                  RecurringStartDate: recurringStartDate,
+                                  RecurringEndDate: recurringEndDate,
+                                  completeValue: Float(userData.completeValue[index]) ?? 0.0)
+                DispatchQueue.main.async {
+                    store.sleeps.append(sleep)
+                }
+            } else {
+                print("DietList - 日期或時間轉換失敗")
+            }
+        }
+    }
+    //    completion(["Success"])
+    completion(["message":"Success"])
 }
 
 //func handletickersList(data: Data,store: TickerStore, completion: @escaping ([String]) -> Void) {
@@ -232,16 +278,16 @@ func handletickersList(data: Data,store: TickerStore, completion: @escaping ([St
                 }
                 let taskId = userData.ticker_id[index]
                 let task = Ticker(id: taskId, name: userData.name[index], deadline: deadline, exchage: exchange!)
-
+                
                 DispatchQueue.main.async {
                     store.tickers.append(task)
                 }
-
+                
             } else {
                 print("TickerList - 尚未兌換")
             }
         }
     }
-//    completion(["Success"])
+    //    completion(["Success"])
     completion(["message":"Success"])
 }

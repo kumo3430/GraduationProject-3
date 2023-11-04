@@ -32,6 +32,7 @@ struct CalendarView: View {
     @EnvironmentObject var todoStore: TodoStore
     @EnvironmentObject var sportStore: SportStore
     @EnvironmentObject var dietStore: DietStore
+    @EnvironmentObject var sleepStore: SleepStore
     @EnvironmentObject var mockData: MockData
     @State private var showingActionSheet = false
     @State private var action: Action? = nil
@@ -147,6 +148,7 @@ struct CalendarView: View {
         let filteredTodos = todoStore.todosForDate(selectedDate)
         let filteredSports = sportStore.sportsForDate(selectedDate)
         let filteredDiets = dietStore.dietForDate(selectedDate)
+        let filteredSleeps = sleepStore.sleepForDate(selectedDate)
         
         return VStack(spacing: 20) {
             //要修改畫面的時候再打開
@@ -202,6 +204,17 @@ struct CalendarView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 ForEach(filteredDiets) { diet in
                     ModernEventRow(eventTitle: diet.title, eventSubtitle: diet.description, eventRecurringUnit: diet.recurringUnit, eventValue: String(diet.dietsValue), eventUnit: "", eventSelectType: diet.selectedDiets, icon: "fork.knife")
+                }
+            }
+            
+            Group {
+                Text("作息")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                ForEach(filteredSleeps) { sleep in
+                    ModernEventRow(eventTitle: sleep.title, eventSubtitle: sleep.description, eventRecurringUnit: "", eventValue: String(sleep.sleepValue), eventUnit: formattedTime(sleep.sleepTime), eventSelectType: sleep.selectedSleeps, icon: "bed.double.fill")
                 }
             }
         }

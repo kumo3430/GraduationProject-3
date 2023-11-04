@@ -118,6 +118,8 @@ func handleDataForPHP(php: String, data: Data,store: (any ObservableObject)? = n
         handleSportList(data: data,store: store as! SportStore, completion: completion)
     case "DietList":
         handleDietList(data: data,store: store as! DietStore, completion: completion)
+    case "SleepList":
+        handleSleepList(data: data,store: store as! SleepStore, completion: completion)
     case "tickersList":
         handletickersList(data: data,store: store as! TickerStore, completion: completion)
         
