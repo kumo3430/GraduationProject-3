@@ -161,7 +161,9 @@ struct RoutineData: Decodable {
     
     var RecurringStartDate: [String]
     var RecurringEndDate: [String]
-    var completeValue: [String]
+    var sleepTime: [String?]
+    var wakeUpTime: [String?]
+//    var completeValue: [String]
     
     var message: String
 }
@@ -431,11 +433,63 @@ class RoutineStore: ObservableObject {
     func clearTodos() {
         routines = []
     }
-//    func updateCompleteValue(withID id: Int, newValue: Int) {
-//        if let index = routines.firstIndex(where: { $0.id == id }) {
-//            routines[index].completeValue = Float(newValue)
-//        }
-//    }
+    
+    func updateCompleteValue(withID id: Int, newValue: Date,type: Int) {
+        if let index = routines.firstIndex(where: { $0.id == id }) {
+            if type == 0 {
+                routines[index].sleepTime = newValue
+            } else if type == 1{
+                routines[index].wakeUpTime = newValue
+            }
+            print("我是檢查 newValue ： \(newValue)")
+            print("我是檢查 type ： \(type)")
+            print("我是檢查 routines[index] ： \(routines[index])")
+        }
+    }
+    func updateRecurring(withID id: Int, newDate: Date?, newTime: Date?,type: Int) {
+        if let index = routines.firstIndex(where: { $0.id == id }) {
+            if type == 0 {
+                // 早睡
+                routines[index].sleepTime = newTime
+            } else if type == 1 {
+                // 早起
+                routines[index].wakeUpTime = newTime
+            } else if type == 2 {
+                // 睡眠時長 - 睡覺
+                routines[index].RecurringStartDate = newDate ?? Date()
+                let currentDate = Date() // 假设这是你要操作的日期
+                let calendar = Calendar.current // 使用当前用户的日历
+                if let nextDate = calendar.date(byAdding: .day, value: 1, to: newDate ?? Date()) {
+                    print(nextDate) // nextDate 是一个 Date 对象，已经加上了一天
+                    routines[index].RecurringEndDate = nextDate
+                }
+                routines[index].sleepTime = newTime ?? nil
+                routines[index].wakeUpTime = nil
+            } else if type == 3 {
+                // 睡眠時長 - 起來
+                routines[index].wakeUpTime = newTime
+                duplicateRoutineWithID(id, newID: 0)
+                
+                routines[index].RecurringStartDate = newDate ?? Date()
+                let currentDate = Date() // 假设这是你要操作的日期
+                let calendar = Calendar.current // 使用当前用户的日历
+                if let nextDate = calendar.date(byAdding: .day, value: 1, to: newDate ?? Date()) {
+                    print(nextDate) // nextDate 是一个 Date 对象，已经加上了一天
+                    routines[index].RecurringEndDate = nextDate
+                }
+                routines[index].sleepTime = nil
+                routines[index].wakeUpTime = nil
+            }
+            print("我是檢查 routines[index] ： \(routines[index])")
+        }
+    }
+    func duplicateRoutineWithID(_ id: Int, newID: Int) {
+        if let index = routines.firstIndex(where: { $0.id == id }) {
+            var newRoutine = routines[index]
+            newRoutine.id = newID
+            routines.append(newRoutine)
+        }
+    }
 }
 
 class TickerStore: ObservableObject {

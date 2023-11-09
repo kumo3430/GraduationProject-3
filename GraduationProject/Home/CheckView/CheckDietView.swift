@@ -120,7 +120,7 @@ struct CheckDietView: View {
                             .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
                             .font(.system(size: 16))
                     }
-                    .disabled(isFail == true)
+                    .disabled(isFail == true || dietValue <= 0)
                 }
                 .padding(.horizontal, 10)
             }
@@ -168,7 +168,8 @@ struct CheckDietView: View {
             "id": task.id,
             "RecurringStartDate": formattedDate(task.RecurringStartDate),
             "RecurringEndDate": formattedDate(task.RecurringEndDate),
-            "completeValue": accumulatedValue,
+            "completeValue": dietValue,
+            "isComplete": isTaskSuccess,
         ]
         phpUrl(php: "upDateCompleteValue" ,type: "reviseTask",body:body, store: nil){ message in
             // 在此处调用回调闭包，将 messenge 值传递给调用者

@@ -12,7 +12,7 @@ struct TodayTasksView: View {
     @State private var previousCompletionStatus: [Int: Bool] = [:]
     @State private var remainingValues: [Int: Float] = [:]
     @ObservedObject private var taskService = TaskService.shared
-    @ObservedObject var sleepTracker = SleepActionTracker()
+//    @ObservedObject var sleepTracker = SleepActionTracker()
     @State private var selectedTaskId: Int?
     
     @State private var playAnimation1: Bool = false //完成
@@ -163,6 +163,55 @@ struct TodayTasksView: View {
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                             .padding(EdgeInsets(top: 15, leading: 25, bottom: 15, trailing: 25))
                         }
+                        ForEach(routineStore.routineForDate(Date()), id: \.id) { task in
+                            //                        ForEach(filteredSports, id: \.id) { task in
+                            HStack{
+                                getTaskView(task: task,type: "routine")
+                                    .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)  // Adjusted size here
+                                    .cornerRadius(10)
+                                    .onReceive(CheckSleepView.remainingValuePublisher) { isCompleted,routineType in
+      
+                                        switch routineType {
+                                        case 0:
+                                            if isCompleted == true {
+                                                playAnimation3 = true
+                                            } else {
+                                                print("Setting playAnimation to true")
+                                                playAnimation5 = true
+                                            }
+                                        case 1:
+                                            if isCompleted == true {
+                                                playAnimation4 = true
+                                            } else {
+                                                print("Setting playAnimation to true")
+                                                playAnimation5 = true
+                                            }
+                                        case 2:
+                                            if isCompleted == true {
+                                                print("Setting playAnimation to true")
+                                                playAnimation1 = true
+                                            } else {
+                                                playAnimation2 = true
+                                            }
+                                        case 3:
+                                            if isCompleted == true {
+                                                print("睡眠時長")
+                                                playAnimation1 = true
+                                            } else {
+                                                print("睡眠時長")
+                                                playAnimation5 = true
+                                            }
+                                        default:
+                                            break
+                                        }
+                                    }
+                            }
+                            .onAppear() {
+                                print("RoutineStore: \(task)")
+                            }
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                            .padding(EdgeInsets(top: 15, leading: 25, bottom: 15, trailing: 25))
+                        }
                     }
                     .onAppear() {
                     tasksForToday = taskStore.tasksForDate(Date())
@@ -299,7 +348,7 @@ struct TodayTasksView: View {
         case "diet":
             taskView =  AnyView(CheckDietView( task: task as! Diet))
         default:
-            taskView =  AnyView(CheckSportView( completeValue: 0.0, task: task as! Sport))
+            taskView =  AnyView(CheckSleepView( task: task as! Routine))
         }
         
         return taskView

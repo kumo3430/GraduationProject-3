@@ -252,8 +252,8 @@ func handleRoutineList(data: Data,store: RoutineStore, completion: @escaping ([S
                                   todoNote: userData.todoNote[index],
                                   RecurringStartDate: recurringStartDate,
                                   RecurringEndDate: recurringEndDate,  
-                                      sleepTime: nil,
-                                      wakeUpTime: nil)
+                                      sleepTime: convertToTime(userData.sleepTime[index]),
+                                      wakeUpTime: convertToTime(userData.wakeUpTime[index]))
                 DispatchQueue.main.async {
                     store.routines.append(routine)
                 }

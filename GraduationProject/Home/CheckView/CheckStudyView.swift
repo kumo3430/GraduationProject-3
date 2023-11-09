@@ -92,7 +92,8 @@ struct CheckStudyView: View {
                             isTaskCompleted = true
 //                                CheckSportView.remainingValuePublisher.send( isCompleted)
                         }
-                        CheckSportView.remainingValuePublisher.send( isCompleted)
+//                        CheckSportView.remainingValuePublisher.send( isCompleted)
+                        CheckSportView.remainingValuePublisher.send( isTaskCompleted)
                         upDateCompleteValue{_ in }
                     }) {
                         Image(systemName: "checkmark")
@@ -101,7 +102,7 @@ struct CheckStudyView: View {
                             .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
                             .font(.system(size: 16))
                     }
-                    .disabled(isTaskCompleted)
+                    .disabled(isTaskCompleted || studyValue <= 0)
                 }
                 .padding(.horizontal, 10)
             }
@@ -128,7 +129,8 @@ struct CheckStudyView: View {
             "id": task.id,
             "RecurringStartDate": formattedDate(task.RecurringStartDate),
             "RecurringEndDate": formattedDate(task.RecurringEndDate),
-            "completeValue": accumulatedValue,
+            "completeValue": studyValue,
+            "isComplete": isTaskCompleted,
         ]
         phpUrl(php: "upDateCompleteValue" ,type: "reviseTask",body:body, store: nil){ message in
             // 在此处调用回调闭包，将 messenge 值传递给调用者
