@@ -140,19 +140,24 @@ struct IntervalProgressView: View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
                 ForEach(stages.indices, id: \.self) { index in
-                    HStack {
-                        if index == currentStage {
-                            Circle()
-                                .fill(colorForStage(index: index))
-                                .frame(width: 8, height: 8)
-                        }
-                        Text(stages[index])
-                            .font(.system(size: 12)) // Smaller font size to fit the text
-                            .fontWeight(index == currentStage ? .bold : .regular)
-                            .foregroundColor(colorForStage(index: index))
-                        if completedStages.contains(index) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(Color.green)
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack {
+                            if index == currentStage {
+                                Circle()
+                                    .fill(colorForStage(index: index))
+                                    .frame(width: 8, height: 8)
+                            }
+                            Text(stages[index])
+                                .font(.system(size: 12))
+                                .fontWeight(index == currentStage ? .bold : .regular)
+                                .foregroundColor(colorForStage(index: index))
+                                .alignmentGuide(.firstTextBaseline) { context in
+                                    context[.top]
+                                }
+                            if completedStages.contains(index) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(Color.green)
+                            }
                         }
                         Text(days[index])
                             .font(.system(size: 10))
@@ -162,7 +167,7 @@ struct IntervalProgressView: View {
                                 context[.top]
                             }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
             }
             GeometryReader { geometry in
