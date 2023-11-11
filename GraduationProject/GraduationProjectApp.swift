@@ -27,6 +27,7 @@ struct YourApp: App {
     @StateObject var dietStore = DietStore()
     @StateObject var routineStore = RoutineStore()
     @StateObject var tickerStore = TickerStore()
+    @StateObject var completionRates = CompletionRatesViewModel()
     @StateObject private var tabBarSettings = TabBarSettings()
     
     var body: some Scene {
@@ -48,6 +49,7 @@ struct YourApp: App {
                         .environmentObject(dietStore)
                         .environmentObject(routineStore)
                         .environmentObject(tickerStore)
+                        .environmentObject(completionRates)
                         .environmentObject(tabBarSettings)
                         .onAppear() {
                             fetchDataIfNeeded()
@@ -108,6 +110,7 @@ struct YourApp: App {
         sportStore.clearTodos()
         dietStore.clearTodos()
         routineStore.clearTodos()
+        completionRates.clearTodos()
         tickerStore.clearTodos()
         UserDefaults.standard.set("", forKey: "uid")
         UserDefaults.standard.set("", forKey: "userName")

@@ -285,8 +285,22 @@ struct FirstDay: Decodable {
 struct CheckList: Decodable {
     var checkDate: [String]
     var completeValue: [String]
+    var targetvalue: Float
     var message: String
 }
+
+class CompletionRatesViewModel: ObservableObject {
+    @Published var completionRates: [String: Double] = ["": 0.0]
+    
+    func updateCompletionRate(date: Date, newValue: Double) {
+        let formattedDate = GraduationProject.formattedDate(date)
+        completionRates.updateValue(newValue, forKey: formattedDate)
+    }
+    func clearTodos() {
+        completionRates = ["": 0.0]
+    }
+}
+
 class TodoStore: ObservableObject {
     //    @Published var todos = [Todo]()
     @Published var todos: [Todo] = []

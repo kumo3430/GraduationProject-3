@@ -183,7 +183,7 @@ func handleDataForPHP(php: String, data: Data,store: (any ObservableObject)? = n
     case "TrackingFirstDay":
         handleTrackingFirstDay(data: data, messageType: .TrackingFirstDay, completion: completion)
     case "RecurringCheckList":
-        handleRecurringCheckList(data: data, messageType: .RecurringCheckList, completion: completion)
+        handleRecurringCheckList(data: data,store: store as! CompletionRatesViewModel, messageType: .RecurringCheckList, completion: completion)
         
     default:
         break
