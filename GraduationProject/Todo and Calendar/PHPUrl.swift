@@ -177,6 +177,8 @@ func handleDataForPHP(php: String, data: Data,store: (any ObservableObject)? = n
         
     case "upDateCompleteValue":
         handleUpDateCompleteValue(data: data, completion: completion)
+    case "upDateSpaced":
+        handleUpDateCompleteValue(data: data, completion: completion)
         
     case "TrackingFirstDay":
         handleTrackingFirstDay(data: data, messageType: .TrackingFirstDay, completion: completion)

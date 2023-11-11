@@ -68,23 +68,11 @@ struct TodayTasksView: View {
                                 getTaskView(task: task,type: "spaced")
                                     .frame(width: UIScreen.main.bounds.width * 0.9, height: 200)  // Adjusted size here
                                     .cornerRadius(10)
-                                    .onReceive(CheckSpaceView.remainingValuePublisher) { isCompleted,days in
+                                    .onReceive(CheckSpaceView.remainingValuePublisher) { isCompleted in
                                         
                                         if isCompleted == true {
                                             print("Setting playAnimation to true")
                                             playAnimation1 = true
-                                        } else {
-                                            playAnimation2 = true
-                                        }
-                                        
-                                        if days == 1 {
-                                            tasksForToday[index].isReviewChecked0 = true
-                                        } else if days == 1 {
-                                            tasksForToday[index].isReviewChecked1 = true
-                                        } else if days == 1 {
-                                            tasksForToday[index].isReviewChecked2 = true
-                                        } else {
-                                            tasksForToday[index].isReviewChecked3 = true
                                         }
                                     }
                             }

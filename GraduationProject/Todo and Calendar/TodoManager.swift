@@ -34,9 +34,10 @@ struct ReviseData: Decodable {
 
 struct UpdateValueData: Decodable {
     var todo_id: Int
-    var RecurringStartDate: String
-    var RecurringEndDate: String
-    var completeValue: Float
+    var status: String?
+    var RecurringStartDate: String?
+    var RecurringEndDate: String?
+    var completeValue: Float?
     var message: String
 }
 
@@ -342,6 +343,29 @@ class TaskStore: ObservableObject {
     }
     func clearTasks() {
         tasks = []
+        }
+    struct Repetition {
+        var date: Date
+        var isChecked: Bool
+    }
+    func updateCompleteValue(withID id: Int) {
+        
+        let today = formattedDate(Date())
+        
+        if let index = tasks.firstIndex(where: { $0.id == id }) {
+            let repetitions = [
+                Repetition(date: tasks[index].repetition1Count, isChecked: tasks[index].isReviewChecked0),
+                Repetition(date: tasks[index].repetition2Count, isChecked: tasks[index].isReviewChecked1),
+                Repetition(date: tasks[index].repetition3Count, isChecked: tasks[index].isReviewChecked2),
+                Repetition(date: tasks[index].repetition4Count, isChecked: tasks[index].isReviewChecked3)
+            ]
+
+            for (index, repetition) in repetitions.enumerated() {
+                if today == formattedDate(repetition.date) {
+                    break
+                }
+            }
+        }
     }
 
 }

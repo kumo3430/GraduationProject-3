@@ -8,29 +8,31 @@
 import SwiftUI
 import Combine
 
+struct Repetition {
+    var date: Date
+    var isChecked: Bool
+}
 struct CheckSpaceView: View {
     @State var accumulatedValue: Float = 0.0
+    //    @Binding var isTaskCompleted: Bool
     @State var isTaskCompleted: Bool  = false
+    @State var isFail: Bool  = false
     @State private var isCompleted: Bool = false
-    @State private var repetition1Count: String = ""
-    @State private var repetition2Count: String = ""
-    @State private var repetition3Count: String = ""
-    @State private var repetition4Count: String = ""
-    @State private var isToday1: Int = 0
-    @State private var isToday2: Int = 0
-    @State private var isToday3: Int = 0
-    @State private var isToday4: Int = 0
+    @State private var currentStageIndex: Int = 3
+    //0-3表示間隔學習階段
     
     let titleColor = Color(red: 229/255, green: 86/255, blue: 4/255)
     let customBlue = Color(red: 175/255, green: 168/255, blue: 149/255)
+    //    var task: DailyTask
     var task: Task
     @EnvironmentObject var taskStore: TaskStore
     let habitType: String = "間隔學習"
     let intervalLearningType: String = "學習"
-    static let remainingValuePublisher = PassthroughSubject<(isCompleted: Bool,days: Int), Never>()
+    static let remainingValuePublisher = PassthroughSubject<(Bool), Never>()
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 5) {
+                //                Text(task.name)
                 Text(task.title)
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundColor(titleColor)
@@ -41,160 +43,149 @@ struct CheckSpaceView: View {
                     .foregroundColor(Color.secondary)
                     .padding(.bottom, 1)
                 
-                Text("間隔學習階段: \(intervalLearningType)")
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundColor(customBlue)
-                    .padding(.bottom, 1)
+                IntervalProgressView(currentStage: currentStageIndex)
                 
-                HStack {
-                    VStack(alignment: .center) {
-                        Text("第一天")
-                            .font(.system(size: 12, weight: isToday1 == 1 ? .bold : .medium, design: .serif))
-                            .foregroundColor(isToday1 == 1 ? titleColor : Color.secondary)
-                        
-                        Text(repetition1Count)
-                            .font(.system(size: 12, weight: .semibold, design: .default))
-                            .foregroundColor(customBlue)
-                        Button(action: {
-//                                task.isReviewChecked0 = true
-                                isTaskCompleted = true
-                            CheckSpaceView.remainingValuePublisher.send((isCompleted: isTaskCompleted,days: 1))
-                        }) {
-                            Image(systemName: self.isToday1 == 0 && task.isReviewChecked0 ? "xmark" : "checkmark")
-                                .foregroundColor(isTaskCompleted ? Color.morandiGreen : Color.white)
-                                .padding(6)
-                                .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
-                                .font(.system(size: 16))
-                        }
-                        .disabled(isTaskCompleted || isToday1 != 1)
-                        .padding(.horizontal, 10)
+                Button(action: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        isTaskCompleted = true
                     }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .center) {
-                        Text("第三天")
-                            .font(.system(size: 12, weight:  isToday2 == 1 ? .bold : .medium, design: .serif))
-                            .foregroundColor(Color.secondary)
-                        
-                        Text(repetition2Count)
-                            .font(.system(size: 12, weight: .semibold, design: .default))
-                            .foregroundColor(customBlue)
-                        Button(action: {
-//                            task.isReviewChecked0 = true
-                            isTaskCompleted = true
-                            CheckSpaceView.remainingValuePublisher.send((isCompleted: isTaskCompleted,days: 2))
-                        }) {
-                            Image(systemName: isToday2 == 0 && task.isReviewChecked1 ? "xmark" : "checkmark")
-                                .foregroundColor(isTaskCompleted ? Color.gray : Color.white)
-                                .padding(6)
-                                .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
-                                .font(.system(size: 16))
-                        }
-                        .disabled(isTaskCompleted || isToday2 != 1)
-                        .padding(.horizontal, 10)
-                    }
-                    Spacer()
-                    
-                    VStack(alignment: .center) {
-                        Text("第七天")
-                            .font(.system(size: 12, weight:  isToday3 == 1 ? .bold : .medium, design: .serif))
-                            .foregroundColor(Color.secondary)
-                        
-                        Text(repetition3Count)
-                            .font(.system(size: 12, weight: .semibold, design: .default))
-                            .foregroundColor(customBlue)
-                        Button(action: {
-//                            task.isReviewChecked0 = true
-                            isTaskCompleted = true
-                            CheckSpaceView.remainingValuePublisher.send((isCompleted: isTaskCompleted,days: 3))                        }) {
-                            Image(systemName: isToday3 == 0 && task.isReviewChecked2 ? "xmark" : "checkmark")
-                                .foregroundColor(isTaskCompleted ? Color.gray : Color.white)
-                                .padding(6)
-                                .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
-                                .font(.system(size: 16))
-                        }
-                        .disabled(isTaskCompleted || isToday3 != 1)
-                        .padding(.horizontal, 10)
-                    }
-                    Spacer()
-                    
-                    VStack(alignment: .center) {
-                        Text("第十四天")
-                            .font(.system(size: 12, weight:  isToday4 == 1 ? .bold : .medium, design: .serif))
-                            .foregroundColor(Color.secondary)
-                        
-                        Text(repetition4Count)
-                            .font(.system(size: 12, weight: .semibold, design: .default))
-                            .foregroundColor(customBlue)
-                        Button(action: {
-//                            task.isReviewChecked0 = true
-                            isTaskCompleted = true
-                            CheckSpaceView.remainingValuePublisher.send((isCompleted: isTaskCompleted,days: 4))
-                        }) {
-                            Image(systemName: isToday4 == 0 && task.isReviewChecked3 ? "xmark" : "checkmark")
-                                .foregroundColor(isTaskCompleted ? Color.gray : Color.white)
-                                .padding(6)
-                                .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
-                                .font(.system(size: 16))
-                        }
-                        .disabled(isTaskCompleted || isToday4 != 1)
-                        .padding(.horizontal, 10)
-                    }
+                    taskStore.updateCompleteValue(withID: task.id)
+                    CheckSpaceView.remainingValuePublisher.send(isTaskCompleted)
+                    upDateCompleteValue{_ in }
+
+
+                }) {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(isTaskCompleted || isFail ? Color.gray : Color.white)
+                        .padding(6)
+                        .background(Capsule().fill(customBlue).shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 2))
+                        .font(.system(size: 16))
                 }
+                .disabled(isTaskCompleted || isFail)
                 .padding(.horizontal, 10)
             }
             .padding(12)
-            .background(isTaskCompleted ? Color.gray : Color.clear)
+            .background(isTaskCompleted || isFail ? Color.gray : Color.clear)
             if isTaskCompleted {
                 Image(systemName: "checkmark")
                     .foregroundColor(.white)
                     .font(.system(size: 20, weight: .bold))
                     .padding(15)
                     .background(Circle().fill(Color.green))
+            } else if isFail {
+                Image(systemName: "xmark")
+                    .foregroundColor(.white)
+                    .font(.system(size: 20, weight: .bold))
+                    .padding(15)
+                    .background(Circle().fill(Color.red))
             }
         }
-        .background(isTaskCompleted ? Color.gray : Color.clear)
+        .background(isTaskCompleted || isFail ? Color.gray : Color.clear)
         .onAppear() {
+            
             let today = formattedDate(Date())
-            print("Today\(today)")
-            print("repetition1Count\(formattedDate(task.repetition1Count))")
-            if today == formattedDate(task.repetition1Count) {
-                isToday1 = 1
-            } else if today > formattedDate(task.repetition1Count) {
-                isToday1 = 0
-            } else if today < formattedDate(task.repetition1Count) {
-                isToday1 = 2
+            
+            let repetitions = [
+                Repetition(date: task.repetition1Count, isChecked: task.isReviewChecked0),
+                Repetition(date: task.repetition2Count, isChecked: task.isReviewChecked1),
+                Repetition(date: task.repetition3Count, isChecked: task.isReviewChecked2),
+                Repetition(date: task.repetition4Count, isChecked: task.isReviewChecked3)
+            ]
+            
+            for (index, repetition) in repetitions.enumerated() {
+                
+                if today > formattedDate(repetition.date) {
+                    isFail = !repetition.isChecked
+                } else if today == formattedDate(repetition.date) {
+                    currentStageIndex = index
+                    isTaskCompleted = repetition.isChecked
+                    break
+                }
             }
-            if today == formattedDate(task.repetition2Count) {
-                isToday2 = 1
-            } else if today > formattedDate(task.repetition2Count) {
-                isToday2 = 0
-            } else if today < formattedDate(task.repetition2Count) {
-                isToday2 = 2
-            }
-            if today == formattedDate(task.repetition3Count) {
-                isToday3 = 1
-            } else if today > formattedDate(task.repetition3Count) {
-                isToday3 = 0
-            } else if today < formattedDate(task.repetition3Count) {
-                isToday3 = 2
-            }
-            if today == formattedDate(task.repetition4Count) {
-                isToday4 = 1
-            } else if today > formattedDate(task.repetition4Count) {
-                isToday4 = 0
-            } else if today < formattedDate(task.repetition4Count) {
-                isToday4 = 2
-            }
-            print("isToday1\(isToday1)")
-            repetition1Count = formattedDate(task.repetition1Count)
-            repetition2Count = formattedDate(task.repetition2Count)
-            repetition3Count = formattedDate(task.repetition3Count)
-            repetition4Count = formattedDate(task.repetition4Count)
+        }
+    }
+    func upDateCompleteValue(completion: @escaping (String) -> Void) {
+        let body: [String: Any] = [
+            "id": task.id,
+            "value": currentStageIndex+1
+        ]
+
+        phpUrl(php: "upDateSpaced" ,type: "reviseTask",body:body, store: nil){ message in
+            // 在此处调用回调闭包，将 messenge 值传递给调用者
+//            completion(message[0])
+            completion(message["message"]!)
         }
     }
 }
+
+struct IntervalProgressView: View {
+    
+    var stages: [String] = ["第一次複習", "第二次複習", "第三次複習", "第四次複習"]
+    var days: [String] = ["第一天", "第三天", "第七天", "第十四天"]
+    var currentStage: Int //0-3表示間隔學習階段
+    var completedStages: Set<Int> = []
+    
+    let morandiBlues = [
+        Color(hex: "#639ab2"),
+        Color(hex: "#638bb2"),
+        Color(hex: "#637bb2"),
+        Color(hex: "#636bb2")
+    ]
+    
+    private func colorForStage(index: Int) -> Color {
+        return morandiBlues[min(max(0, index), morandiBlues.count - 1)]
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                ForEach(stages.indices, id: \.self) { index in
+                    HStack {
+                        if index == currentStage {
+                            Circle()
+                                .fill(colorForStage(index: index))
+                                .frame(width: 8, height: 8)
+                        }
+                        Text(stages[index])
+                            .font(.system(size: 12)) // Smaller font size to fit the text
+                            .fontWeight(index == currentStage ? .bold : .regular)
+                            .foregroundColor(colorForStage(index: index))
+                        if completedStages.contains(index) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(Color.green)
+                        }
+                        Text(days[index])
+                            .font(.system(size: 10))
+                            .fontWeight(.light)
+                            .foregroundColor(Color.secondary.opacity(0.5))
+                            .alignmentGuide(.firstTextBaseline) { context in
+                                context[.top]
+                            }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(height: 5)
+                    HStack(spacing: 0) {
+                        ForEach(0..<currentStage, id: \.self) { stage in
+                            Capsule()
+                                .fill(self.colorForStage(index: stage))
+                                .frame(width: geometry.size.width / CGFloat(stages.count))
+                        }
+                    }
+                    .frame(height: 5)
+                }
+            }
+            .frame(height: 20)
+            .animation(.linear, value: currentStage)
+        }
+    }
+}
+
 
 struct CheckSpaceView_Previews: PreviewProvider {
     @State static var  sampleTodo = Task(
